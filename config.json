@@ -1,0 +1,215 @@
+[
+    {
+        "title": "최저가 검색",
+        "key": "regular_search",
+        "sites": [
+            {
+                "nickname": "다나와",
+                "url": "http://search.danawa.com/dsearch.php?query={query}"
+            },
+            {
+                "nickname": "네이버쇼핑",
+                "url": "https://search.shopping.naver.com/search/all?where=all&frm=NVSCTAB&query={query}"
+            },
+            {
+                "nickname": "에누리",
+                "url": "https://www.enuri.com/search.jsp?keyword={query}"
+            },
+            {
+                "nickname": "G마켓",
+                "url": "https://www.gmarket.co.kr/n/search?keyword={query}"
+            },
+            {
+                "nickname": "11번가",
+                "url": "https://searchn.11st.co.kr/pc/amazontab?kwd={query}"
+            },
+            {
+                "nickname": "옥션",
+                "url": "https://www.auction.co.kr/n/search?keyword={query}"
+            },
+            {
+                "nickname": "롯데온",
+                "url": "https://www.lotteon.com/csearch/search/search?render=search&platform=pc&q={query}"
+            },
+            {
+                "nickname": "알리익스프레스",
+                "url": "https://ko.aliexpress.com/wholesale?catId=0&initiative_id=SB_20220311085718&SearchText={query}"
+            },
+            {
+                "nickname": "SSG.COM",
+                "url": "https://www.ssg.com/search.ssg?target=all&query={query}"
+            },
+            {
+                "nickname": "마켓컬리",
+                "url": "https://www.kurly.com/search?sword={query}"
+            },
+            {
+                "nickname": "오늘의집",
+                "url": "https://ohou.se/search/index?query={query}&search_affect_type=Typing"
+            },
+            {
+                "nickname": "올리브영",
+                "url": "https://www.oliveyoung.co.kr/store/search/getSearchMain.do?query={query}"
+            },
+            {
+                "nickname": "인터파크",
+                "url": "https://isearch.interpark.com/result?q={query}"
+            },
+            {
+                "nickname": "쿠팡",
+                "url": "https://www.coupang.com/np/search?component=&q={query}&filterType=rocket%2Crocket_wow%2Ccoupang_global"
+            },
+            {
+                "nickname": "이마트몰",
+                "url": "https://m-emart.ssg.com/search.ssg?query={query}&shpp=ssgem"
+            }
+        ],
+        "groups": {}
+    },
+    {
+        "title": "패션",
+        "key": "패션",
+        "sites": [
+            {
+                "nickname": "무신사",
+                "url": "https://www.musinsa.com/search/goods?keyword={query}"
+            },
+            {
+                "nickname": "SSF샵",
+                "url": "https://www.ssfshop.com/public/search/search/view?serviceType=SRC&keyword={query}"
+            },
+            {
+                "nickname": "KREAM",
+                "url": "https://kream.co.kr/search?keyword={query}"
+            },
+            {
+                "nickname": "29cm",
+                "url": "https://shop.29cm.co.kr/search?keyword={query}&sort=RECOMMEND&sortOrder=DESC&defaultSort=RECOMMEND&keywordTypes=brand"
+            },
+            {
+                "nickname": "EQL",
+                "url": "https://www.eqlstore.com/public/search/view?searchWord={query}"
+            },
+            {
+                "nickname": "ETC서울",
+                "url": "https://etcseoul.com/product/search.html?view_type=&supplier_code=&keyword={query}"
+            }
+        ],
+        "groups": {}
+    },
+    {
+        "title": "면세점",
+        "key": "duty_free_search",
+        "sites": [
+            {
+                "nickname": "SSG 면세점",
+                "url": "https://www.ssgdfs.com/kr/search/resultsTotal?startCount=0&offShop=&suggestReSearchReq=true&orReSearchReq=true&query={query}"
+            },
+            {
+                "nickname": "롯데 면세점",
+                "url": "https://kor.lottedfs.com/kr/search?comSearchWord={query}"
+            },
+            {
+                "nickname": "신라 면세점",
+                "url": "https://www.shilladfs.com/estore/kr/ko/search?text={query}"
+            },
+            {
+                "nickname": "현대 면세점",
+                "url": "https://www.hddfs.com/shop/sr/searchResult.do?searchTerm={query}"
+            }
+        ],
+        "groups": {}
+    },
+    {
+        "title": "중고거래",
+        "key": "used_market_search",
+        "sites": [
+            {
+                "nickname": "중고나라",
+                "url": "https://web.joongna.com/search/{query}?keywordSource=INPUT_KEYWORD"
+            },
+            {
+                "nickname": "번개장터",
+                "url": "https://m.bunjang.co.kr/search/products?q={query}"
+            },
+            {
+                "nickname": "프루츠패밀리",
+                "url": "https://fruitsfamily.com/search/{query}/isSelling=true&sort=POPULAR"
+            },
+            {
+                "nickname": "당근_정자동",
+                "url": "https://www.daangn.com/kr/buy-sell/?in=%EC%A0%95%EC%9E%90%EB%8F%99-1339&search={query}"
+            },
+            {
+                "nickname": "당근_서현",
+                "url": "https://www.daangn.com/kr/buy-sell/?in=%EC%84%9C%ED%98%84%EB%8F%99-4502&search={query}"
+            },
+            {
+                "nickname": "당근_고등동",
+                "url": "https://www.daangn.com/kr/buy-sell/?in=%EA%B3%A0%EB%93%B1%EB%8F%99-1320&search={query}"
+            },
+            {
+                "nickname": "당근_강남",
+                "url": "https://www.daangn.com/kr/buy-sell/?in=%EC%97%AD%EC%82%BC%EB%8F%99-6035&search={query}"
+            },
+            {
+                "nickname": "당근_서초",
+                "url": "https://www.daangn.com/kr/buy-sell/?in=%EC%84%9C%EC%B4%88%EB%8F%99-6128&search={query}"
+            },
+            {
+                "nickname": "당근_화성",
+                "url": "https://www.daangn.com/kr/buy-sell/?in=%EB%B4%89%EB%8B%B4%EC%9D%8D-1766&search={query}"
+            },
+            {
+                "nickname": "당근_신림",
+                "url": "https://www.daangn.com/kr/buy-sell/?in=%EC%8B%A0%EB%A6%BC%EB%8F%99-355&search={query}"
+            },
+            {
+                "nickname": "당근_압구정",
+                "url": "https://www.daangn.com/kr/buy-sell/?in=%EC%95%95%EA%B5%AC%EC%A0%95%EB%8F%99-385&search={query}"
+            },
+            {
+                "nickname": "당근_시흥",
+                "url": "https://www.daangn.com/kr/buy-sell/?in=%EB%B0%B0%EA%B3%A7%EB%8F%99-4245&search={query}"
+            },
+            {
+                "nickname": "당근_청담",
+                "url": "https://www.daangn.com/kr/buy-sell/?in=%EC%B2%AD%EB%8B%B4%EB%8F%99-386&search={query}"
+            },
+            {
+                "nickname": "당근_논현",
+                "url": "https://www.daangn.com/kr/buy-sell/?in=%EB%85%BC%ED%98%84%EB%8F%99-6031&search={query}"
+            },
+            {
+                "nickname": "당근_삼성",
+                "url": "https://www.daangn.com/kr/buy-sell/?in=%EC%82%BC%EC%84%B1%EB%8F%99-6034&search={query}"
+            },
+            {
+                "nickname": "당근_세곡",
+                "url": "https://www.daangn.com/kr/buy-sell/?in=%EC%84%B8%EA%B3%A1%EB%8F%99-399&search={query}"
+            },
+            {
+                "nickname": "당근_송도",
+                "url": "https://www.daangn.com/kr/buy-sell/?in=%EC%86%A1%EB%8F%84%EB%8F%99-6543&search={query}"
+            }
+        ],
+        "groups": {
+            "당근마켓": [
+                "당근_정자동",
+                "당근_서현",
+                "당근_고등동",
+                "당근_강남",
+                "당근_서초",
+                "당근_화성",
+                "당근_신림",
+                "당근_압구정",
+                "당근_시흥",
+                "당근_청담",
+                "당근_논현",
+                "당근_삼성",
+                "당근_세곡",
+                "당근_송도"
+            ]
+        }
+    }
+]
