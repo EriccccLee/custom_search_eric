@@ -6,6 +6,10 @@ from collections import deque
 
 CONFIG_FILE = "config.json"
 
+def update_search_query_state():
+    st.session_state.search_query = st.session_state.search_query_input_widget
+
+
 # --- Configuration Management ---
 def load_config():
     if not os.path.exists(CONFIG_FILE):
@@ -51,11 +55,15 @@ def open_urls_in_browser(keyword, sites):
     if js_code:
         unique_id = int(time.time() * 1000)
         st.components.v1.html(f"<script id='search-script-{unique_id}'>{js_code}</script>", height=0, width=0)
-        st.success(f"'{keyword}'에 대한 검색을 시작합니다.")
+        # st.success(f"'{keyword}'에 대한 검색을 시작합니다.")
 
 # --- Main Application ---
 def render_search_page():
-    st.title("🔍 맞춤형 최저가 검색기")
+    st.title("🔍 커스텀 검색기")
+
+    def toggle_state(key):
+        """Toggles a boolean value in st.session_state."""
+        st.session_state[key] = not st.session_state[key]
 
     # --- Initialize State & Auto-migrate ---
     if 'search_config' not in st.session_state:
@@ -64,8 +72,8 @@ def render_search_page():
         if updated:
             save_config(config)
             st.rerun()
-    if 'global_keyword_input' not in st.session_state:
-        st.session_state.global_keyword_input = ""
+    if 'search_query' not in st.session_state:
+        st.session_state.search_query = ""
     if 'site_to_move' not in st.session_state:
         st.session_state.site_to_move = None
 
@@ -92,16 +100,22 @@ def render_search_page():
                     if st.button(category['title'], key=f"cat_btn_{cat_key}", type=button_type, use_container_width=True):
                         st.session_state[state_key] = not is_active
                         st.rerun()
-                        st.rerun()
 
             st.markdown("<hr style='margin: 0.5rem 0'>", unsafe_allow_html=True)
 
             keyword_col, search_btn_col = st.columns([4, 1])
             with keyword_col:
-                keyword = st.text_input("검색어를 입력하세요", key="global_keyword_input", placeholder="여기에 검색어를 입력...", label_visibility="collapsed")
+                st.text_input(
+                    "검색어를 입력하세요",
+                    value=st.session_state.search_query,
+                    key="search_query_input_widget",
+                    on_change=update_search_query_state,
+                    placeholder="여기에 검색어를 입력...",
+                    label_visibility="collapsed"
+                )
             with search_btn_col:
-                if st.button("🚀 통합 검색 실행", type="primary", use_container_width=True):
-                    if keyword:
+                if st.button("🚀 검색", type="primary", use_container_width=True):
+                    if st.session_state.search_query:
                         integrated_sites = []
                         for category in st.session_state.search_config:
                             cat_key = category['key']
@@ -119,28 +133,29 @@ def render_search_page():
                                         integrated_sites.append(site)
                         if integrated_sites:
                             with st.spinner("통합 검색을 시작합니다..."):
-                                open_urls_in_browser(keyword, integrated_sites)
+                                open_urls_in_browser(st.session_state.search_query, integrated_sites)
                         else: st.warning("통합 검색할 카테고리를 하나 이상 선택해주세요.")
                     else: st.warning("검색어를 입력해주세요.")
         st.markdown("---")
 
         for i, category in enumerate(st.session_state.search_config):
-            with st.expander(f"{category['title']}", expanded=True):
-                col1, col2 = st.columns([3, 1])
-                with col1:
-                    st.subheader("검색 대상 사이트")
-                    key_prefix = f"check_{category['key']}"
-                    all_site_nicknames = {s['nickname'] for s in category['sites']}
-                    grouped_nicknames = {nickname for group in category.get('groups', {}).values() for nickname in group}
-                    ungrouped_nicknames = sorted(list(all_site_nicknames - grouped_nicknames))
-                    
-                    items_to_render = []
-                    for group_name in sorted(category.get('groups', {}).keys()):
-                        items_to_render.append({"nickname": f"{group_name} (그룹)", "is_group": True, "group_name": group_name})
-                    for nickname in ungrouped_nicknames:
-                        items_to_render.append({"nickname": nickname, "is_group": False})
+            with st.expander(f"{category['title']} 검색 대상", expanded=True):
+                st.subheader("검색 대상 사이트") # This was inside col1, now directly under expander
+                key_prefix = f"check_{category['key']}"
+                all_site_nicknames = {s['nickname'] for s in category['sites']}
+                grouped_nicknames = {nickname for group in category.get('groups', {}).values() for nickname in group}
+                ungrouped_nicknames = sorted(list(all_site_nicknames - grouped_nicknames))
+                
+                items_to_render = []
+                for group_name in sorted(category.get('groups', {}).keys()):
+                    items_to_render.append({"nickname": f"{group_name} (그룹)", "is_group": True, "group_name": group_name})
+                for nickname in ungrouped_nicknames:
+                    items_to_render.append({"nickname": nickname, "is_group": False})
 
-                    num_columns = 4 
+                if not items_to_render:
+                    st.info("표시할 사이트가 없습니다. '사이트 편집 모드'에서 사이트를 추가해주세요.")
+                else:
+                    num_columns = 5
                     cols = st.columns(num_columns)
                     for idx, item in enumerate(items_to_render):
                         with cols[idx % num_columns]:
@@ -148,36 +163,14 @@ def render_search_page():
                             is_group = item.get("is_group", False)
                             state_key = f"{key_prefix}_group_{item['group_name']}" if is_group else f"{key_prefix}_{nickname}"
                             
-                            if state_key not in st.session_state: st.session_state[state_key] = True
+                            if state_key not in st.session_state: 
+                                st.session_state[state_key] = True
+                            
                             is_active = st.session_state[state_key]
                             button_type = "primary" if is_active else "secondary"
                             
                             if st.button(nickname, key=f"btn_{state_key}", type=button_type, use_container_width=True):
                                 st.session_state[state_key] = not is_active
-                                st.rerun()
-                                st.rerun()
-                with col2:
-                    st.write("") 
-                    st.write("") 
-                    if st.button(category['title'], key=f"button_{category['key']}", use_container_width=True):
-                        if keyword:
-                            selected_sites = []
-                            all_sites_in_category = {s['nickname']: s for s in category['sites']}
-                            key_prefix = f"check_{category['key']}"
-                            for group_name, member_nicknames in category.get('groups', {}).items():
-                                if st.session_state.get(f"{key_prefix}_group_{group_name}", True):
-                                    for nickname in member_nicknames:
-                                        if nickname in all_sites_in_category:
-                                            selected_sites.append(all_sites_in_category[nickname])
-                            grouped_nicknames = {site for group in category.get('groups', {}).values() for site in group}
-                            for site in category['sites']:
-                                if site['nickname'] not in grouped_nicknames and st.session_state.get(f"{key_prefix}_{site['nickname']}", True):
-                                    selected_sites.append(site)
-                            if selected_sites:
-                                with st.spinner(f"'{category['title']}' 검색을 시작합니다..."):
-                                    open_urls_in_browser(keyword, selected_sites)
-                            else: st.warning("선택된 검색 사이트가 없습니다.")
-                        else: st.warning("검색어를 입력해주세요.")
             if i < len(st.session_state.search_config) - 1: st.markdown("---")
 
     # --- Edit Mode ---
@@ -316,5 +309,3 @@ def render_search_page():
 
 if __name__ == "__main__":
     render_search_page()
-
-
